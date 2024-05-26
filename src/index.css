@@ -23,6 +23,8 @@
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 79px;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .outlet {
@@ -380,4 +382,8 @@ display: none;
   border: 0 !important;
   outline: 0 !important;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.customDrawer .MuiPaper-root.MuiDrawer-paper {
+  background-color: rgb(255, 255, 255) !important;
 }

@@ -9,9 +9,35 @@ import ListItemText from "@mui/material/ListItemText";
 import { Drawer as MuiDrawer, Typography } from "@mui/material";
 import { IoCloseOutline } from "react-icons/io5";
 import { CiMenuBurger } from "react-icons/ci";
-import { tabsArray } from "../../utils/utils";
+import { headerIconsConditionallyRender, tabsArray } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import HeaderIcon from "../HeaderIcon/HeaderIcon";
 const Drawer = () => {
+  const cb=(id)=>{
+    if(id==="unauthenticated"){
+     return setOpenAuthForm(true)
+    }
+    if(id==="authenticated"){
+      return navigate("/profile")
+    }
+    
+    if(id==="logout"){
+      dispatch(handleSnackAlert({
+        open:true,
+        severity:"success",
+        message:"Logout successfully"
+    }))
+
+      dispatch(handleAuth({ user: null, token: null, authenticated: false }))
+      if(pathname!=="/"){
+        navigate("/")
+
+      }
+    
+    }
+  }
+  const auth = useSelector(state=>state.auth)
   const navigate = useNavigate()
   const [open, setOpen] = React.useState(false);
 
@@ -33,16 +59,13 @@ const Drawer = () => {
       </List>
     </Box>
   );
-
   return (
     <div>
       <Button
         onClick={toggleDrawer(true)}
         sx={{
           minWidth: "",
-          padding: "0px",
-          mt: "20px",
-          ml: "15px",
+          padding: "20px",
         }}
       >
         <CiMenuBurger
@@ -53,7 +76,8 @@ const Drawer = () => {
         />
       </Button>
       <MuiDrawer
-        sx={{ position: "relative" }}
+      className="customDrawer"
+        sx={{ position: "relative"}}
         open={open}
         onClose={toggleDrawer(false)}
       >
@@ -72,6 +96,17 @@ const Drawer = () => {
           }} />
         </Box>
         {DrawerList}
+      <Box sx={{
+        position:"absolute",
+        bottom:"10px",
+        left:"30px"
+      }}>
+      {
+        headerIconsConditionallyRender(auth, false, cb).map((item, index)=><div key={index}>{item.icon}</div>)
+      }
+       
+      </Box>
+
       </MuiDrawer>
     </div>
   );

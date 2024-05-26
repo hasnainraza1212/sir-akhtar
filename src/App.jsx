@@ -11,6 +11,11 @@ import { useEffect, useMemo, useState } from "react"
 import DetailedNews from "./pages/DetailedNews/DetailedNews"
 import Product from "./pages/Product/Product"
 import Construction from "./pages/Construction/Construction"
+import Profile from "./pages/Profile/Profile"
+import Protected from "./pages/Protected/Protected"
+import ProtectedAdmin from "./pages/ProtectedAdmin/ProtectedAdmin"
+import AddContent from "./pages/AddContent/AddContent"
+import AddVideo from "./pages/AddVideo/AddVideo"
 
 function App() {
   const [windowWidth, setWindowWidth] = useState(window?.innerWidth||0)
@@ -42,6 +47,12 @@ useEffect(()=>{
   <Routes>
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
+      <Route path="profile" element={<Protected children={<Profile />}/>}/>
+      <Route path="admin/*" element={<Protected children={<ProtectedAdmin children={<AddContent/>} />}/>}/>
+      <Route path="/admin/manage-content" element={<Protected children={<ProtectedAdmin children={<AddContent/>} />}/>}/>
+      <Route path="/admin/add-video" element={<Protected children={<ProtectedAdmin children={<AddVideo/>} />}/>}/>
+
+
       {/* <Route path="about" element={<About />} />
       <Route path="contact" element={<Contact />} />
       <Route path="services" element={<Services />} />
