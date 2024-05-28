@@ -20,8 +20,8 @@ import { updateProductsCards } from "../../Redux/Slice/ProductSlice/ProductSlice
 import { handleAuth } from "../../Redux/Slice/UserSlice/UserSlice.js";
 import { handleSnackAlert } from "../../Redux/Slice/SnackAlertSlice/SnackAlertSlice.js";
 import CustomDropDown from "../CustomDropDown/CustomDropDown.jsx";
-import { youtubeGetPlaylists } from "../../API/Requests/Requests.js";
-export const channelId = "UCCX0xW7dc8ZehP5OMshg_AQ"
+import { channelId, youtubeGetPlaylists } from "../../API/Requests/Requests.js";
+
 const Header = () => {
   const dispatch = useDispatch()
   const news = useSelector(state=>state?.news)
@@ -33,6 +33,7 @@ const Header = () => {
   const [input, setInput] = React.useState("")
   const [openAuthForm, setOpenAuthForm] = React.useState(false);
   const [openProfileDropDown, setOpenProfileDropDown] = React.useState(false)
+  const [playlists, setPlaylists] = React.useState([])
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -90,7 +91,13 @@ const Header = () => {
   React.useEffect(()=>{
     (async()=>{
         const res =await youtubeGetPlaylists(channelId)
-        console.log(res)
+        const data = res?.map(item=>{
+          let description = item?.snippet?.description?item?.snippet?.description:item?.snippet?.localized?.title
+          description=description.split("\n")[0]
+          return {playLisstID:item.id, title:description
+          }
+        })
+        setPlaylists(data)
     })()
 },[])
   return (
@@ -129,7 +136,7 @@ const Header = () => {
                 }}
               />
             ))}
-          {isAdmin && <CustomDropDown title={"Manage Content"} data={manageContent}/>}
+          {/* {isAdmin && <CustomDropDown title={"Manage Content"} data={playlists}/>} */}
           </Tabs>
         </Box>
         <Box>

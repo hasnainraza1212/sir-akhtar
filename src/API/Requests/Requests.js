@@ -19,7 +19,7 @@ export const Post = async (url,data) => {
 };
 export const Get = async (url,token) => {
     try {
-      const response = await axios.post(host+url, token);
+      const response = await axios.get(host+url, token);
       return response.data
   
     } catch (error) {
@@ -95,7 +95,7 @@ export const Get = async (url,token) => {
       });
       
       const playlists = response.data.items;
-      console.log('Playlists:', playlists);
+    
     } catch (error) {
       console.error('Error fetching playlists:', error.response ? error.response.data : error.message);
     }

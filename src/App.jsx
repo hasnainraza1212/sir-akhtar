@@ -14,8 +14,9 @@ import Construction from "./pages/Construction/Construction"
 import Profile from "./pages/Profile/Profile"
 import Protected from "./pages/Protected/Protected"
 import ProtectedAdmin from "./pages/ProtectedAdmin/ProtectedAdmin"
-import AddContent from "./pages/AddContent/AddContent"
-import AddVideo from "./pages/AddVideo/AddVideo"
+import Content from "./pages/Content/Content"
+import SinglePlaylist from "./Components/SinglePlaylist/SinglePlaylist"
+import CustomVideo from "./Components/CustomVideo/CustomVideo"
 
 function App() {
   const [windowWidth, setWindowWidth] = useState(window?.innerWidth||0)
@@ -48,9 +49,14 @@ useEffect(()=>{
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
       <Route path="profile" element={<Protected children={<Profile />}/>}/>
-      <Route path="admin/*" element={<Protected children={<ProtectedAdmin children={<AddContent/>} />}/>}/>
-      <Route path="/admin/manage-content" element={<Protected children={<ProtectedAdmin children={<AddContent/>} />}/>}/>
-      <Route path="/admin/add-video" element={<Protected children={<ProtectedAdmin children={<AddVideo/>} />}/>}/>
+      <Route path="playlists" element={<Protected children={<Content />} />} />
+        <Route path="playlist/:id" element={<Protected children={<SinglePlaylist />} />} />
+        <Route path="video/:id" element={<Protected children={<CustomVideo />} />} />
+
+
+
+      <Route path="admin/*" element={<Protected children={<ProtectedAdmin children={<Content/>} />}/>}/>
+      <Route path="/admin/content" element={<Protected children={<ProtectedAdmin children={<Content/>} />}/>}/>
 
 
       {/* <Route path="about" element={<About />} />

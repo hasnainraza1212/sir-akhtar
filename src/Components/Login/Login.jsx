@@ -7,7 +7,7 @@ import {Login as login} from "./../../API/EndPoints/Endpoints"
 import { useDispatch } from "react-redux";
 import { handleAuth } from "../../Redux/Slice/UserSlice/UserSlice";
 import { handleSnackAlert } from "../../Redux/Slice/SnackAlertSlice/SnackAlertSlice";
-const Login = ({cb=()=>{}, toggleAuthForm=()=>{}, closeAuthForm=()=>{}}) => {
+const Login = ({cb=()=>{}, toggleAuthForm=()=>{}, closeAuthForm=()=>{}, handlereCaptcha=()=>{}, captchaToken=""}) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [details, setDetails] = useState({
@@ -39,7 +39,7 @@ const Login = ({cb=()=>{}, toggleAuthForm=()=>{}, closeAuthForm=()=>{}}) => {
     const isValid = joivalidatePassword(details, setErrors);
     if (isValid) {
       setErrors({});
-        const response = await login(details)
+        const response = await login({...details, token:captchaToken})
         console.log(response)
       if (response?.success) {
             const data = {user: response.user, token:response.token, authenticated:true }
@@ -51,7 +51,7 @@ const Login = ({cb=()=>{}, toggleAuthForm=()=>{}, closeAuthForm=()=>{}}) => {
             dispatch(handleSnackAlert( {
               open:true,
               severity:"success",
-              message:"Login successfully."
+              message:response?.message
           }))
       } 
       
@@ -62,9 +62,10 @@ const Login = ({cb=()=>{}, toggleAuthForm=()=>{}, closeAuthForm=()=>{}}) => {
         dispatch(handleSnackAlert( {
           open:true,
           severity:"error",
-          message:"Login Failed."
+          message:response?.message
       }))
       // closeAuthForm()
+      handlereCaptcha()
 
       }
       

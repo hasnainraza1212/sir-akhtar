@@ -70,7 +70,7 @@ const CustomDropDown = ({data=[], title=""}) => {
             color: 'white',
 
           }
-        }} onClick={()=>handleClose(item?.link)}>{item?.title}</MenuItem>)
+        }} onClick={()=>handleClose(item?.playLisstID)}>{item?.title}</MenuItem>)
       }
      
    

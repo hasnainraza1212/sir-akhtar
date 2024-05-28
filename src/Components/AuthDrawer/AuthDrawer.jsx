@@ -17,6 +17,7 @@ import inion from "./../../assets/images/onion.png";
 import CartItem from "../CartItem/CartItem";
 import Login from "../Login/Login";
 import Signup from "../SignUp/SignUp";
+import { GoogleReCaptchaProvider, GoogleReCaptcha } from "react-google-recaptcha-v3";
 const AuthDrawer = ({
   open = false,
   handleClose = () => {},
@@ -28,6 +29,15 @@ const AuthDrawer = ({
   const auth = useSelector((state) => state.auth);
   const handleDisbledCloseButton =()=>setIsDisabled(prev=>!prev)
   const toggleAuthForm = ()=>setToggleAuthForms(prev=>!prev)
+  const [token, setToken] = React.useState("");
+  const [refreshReCaptcha, setRefreshReCaptcha] = React.useState(false);
+const handlereCaptcha=()=>{
+  setRefreshReCaptcha(prev=>!prev)
+}
+
+const setTokenFunc = (getToken) => {
+  setToken(getToken);
+};
   const DrawerList = (
     <Box
       sx={{
@@ -48,15 +58,22 @@ const AuthDrawer = ({
     >
      
        {toggleAuthForms?
-       <Signup closeAuthForm={handleClose}  toggleAuthForm={toggleAuthForm} cb={handleDisbledCloseButton}/>
+       <Signup closeAuthForm={handleClose} captchaToken={token} handlereCaptcha={handlereCaptcha}  toggleAuthForm={toggleAuthForm} cb={handleDisbledCloseButton}/>
         :
-        <Login closeAuthForm={handleClose} toggleAuthForm={toggleAuthForm} cb={handleDisbledCloseButton}/>
+        <Login closeAuthForm={handleClose} captchaToken={token} handlereCaptcha={handlereCaptcha} toggleAuthForm={toggleAuthForm} cb={handleDisbledCloseButton}/>
         }
     </Box>
   );
 
   return (
     <div>
+       <GoogleReCaptchaProvider reCaptchaKey={"6Ld21-gpAAAAAILoc4ASgCJnJgKiHSogO20Ge83o"}>
+          <GoogleReCaptcha
+            className="google-recaptcha-custom-class"
+            onVerify={setTokenFunc}
+            refreshReCaptcha={refreshReCaptcha}
+          />
+        </GoogleReCaptchaProvider>
       <MuiDrawer
         anchor={"right"}
         sx={{ position: "relative" }}

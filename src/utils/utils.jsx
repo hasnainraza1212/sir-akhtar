@@ -168,6 +168,8 @@ export const tabsArray = [
   { tabName: "Resources", link: "/resources" },
   { tabName: "Courses", link: "/courses" },
   { tabName: "Training", link: "/training" },
+  { tabName: "Content", link: "/playlists" },
+
   // { tabName: "Shop", link: "/shop" },
   // { tabName: "Contact", link: "/contact" },
 ];

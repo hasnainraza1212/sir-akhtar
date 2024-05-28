@@ -2,8 +2,11 @@ import { Box, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import BreadCrumBG from "./../../assets/images/breadCrumBg.png";
+import { useSelector } from "react-redux";
 
 const BreadCrum = () => {
+  const auth = useSelector(state=>state.auth)
+  const {pathname} = useLocation()
   const location = useLocation();
 
   const crumbs = useMemo(() => {
@@ -24,7 +27,9 @@ const BreadCrum = () => {
     const pages = location.pathname.split("/").filter((x) => x !== "");
     return pages[0];
   }, [location.pathname]);
-
+if(pathname.includes("/content")&& !auth?.authenticated){
+  return null
+}
   return (
     <Box
       sx={{

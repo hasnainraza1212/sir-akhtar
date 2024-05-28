@@ -7,7 +7,7 @@ import { Register } from "../../API/EndPoints/Endpoints";
 import { useDispatch } from "react-redux";
 import { handleAuth } from "../../Redux/Slice/UserSlice/UserSlice";
 import { handleSnackAlert } from "../../Redux/Slice/SnackAlertSlice/SnackAlertSlice";
-const Signup = ({cb=()=>{}, toggleAuthForm=()=>{}, closeAuthForm=()=>{}}) => {
+const Signup = ({cb=()=>{}, toggleAuthForm=()=>{}, closeAuthForm=()=>{},handlereCaptcha=()=>{}, captchaToken=""}) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [details, setDetails] = useState({
@@ -41,7 +41,7 @@ const Signup = ({cb=()=>{}, toggleAuthForm=()=>{}, closeAuthForm=()=>{}}) => {
     const isValid = joiValidateSignUp(details, setErrors);
     if (isValid) {
       setErrors({});
-        const response = await Register(details)
+        const response = await Register({...details, token:captchaToken})
         console.log(response)
       if (response?.success) {
             const data = {user: response.user, token:response.token, authenticated:true }
@@ -53,7 +53,7 @@ const Signup = ({cb=()=>{}, toggleAuthForm=()=>{}, closeAuthForm=()=>{}}) => {
             dispatch(handleSnackAlert( {
               open:true,
               severity:"success",
-              message:"Sign up successfully."
+              message:response?.message
           }))
       } 
       
@@ -64,10 +64,10 @@ const Signup = ({cb=()=>{}, toggleAuthForm=()=>{}, closeAuthForm=()=>{}}) => {
         dispatch(handleSnackAlert( {
           open:true,
           severity:"error",
-          message:"Sign up Failed."
+          message:response?.message
       }))
       // closeAuthForm()
-
+      handlereCaptcha()
       }
       
      

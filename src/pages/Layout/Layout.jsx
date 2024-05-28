@@ -12,6 +12,7 @@ import SnackAlert from "../../Components/SnackAlert/SnackAlert";
 const Layout = () => {
   const auth = useSelector(state=>state?.auth)
   const {pathname}= useLocation()
+
   // const {pathname} =location;
   const snackAlert = useSelector(state=> state?.snackAlert)
   const dispatch = useDispatch()
@@ -55,7 +56,9 @@ const Layout = () => {
       <div className="outlet">
         <Outlet />
       </div>
-      <Footer />
+     { (pathname.includes("/content")&& !auth?.authenticated)? null:
+
+      <Footer />}
       <SnackAlert open={snackAlert?.open} message={snackAlert.message} severity={snackAlert?.severity} handleClose={handleCloseSnackAlert}/>
     </div>
   );

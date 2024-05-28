@@ -6,16 +6,15 @@ import user from "./../../assets/images/userFallback.jpg";
 import bg from "./../../assets/images/addVideoBg.avif";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { youtubeGetAllvideosOfaPlaylist } from "../../API/Requests/Requests";
+import { apiKey, channelId, youtubeGetAllvideosOfaPlaylist, youtubeGetPlaylists } from "../../API/Requests/Requests";
+import PlaylistItem from "../../Components/PlaylistItem/PlaylistItem";
 
 const AddVideo = () => {
     const auth = useSelector(state=>state.auth)
     const [videos, setVideos] = useState([]);
-    const playerRef = useRef(null);
     const [videoId, setVideoId] = useState('qhU7XYkE_No');
-    const channelId = 'UCCX0xW7dc8ZehP5OMshg_AQ';
-    const apiKey = 'AIzaSyDTe6nBg-5HxV0PvYg2HgK3Trd7ohGAuXA';
-    const playlistId="UUCX0xW7dc8ZehP5OMshg_AQ"
+    const [playlists, setPlaylists] = React.useState([])
+
   
     // useEffect(() => {
     //   const fetchVideos = async () => {
@@ -108,19 +107,35 @@ const AddVideo = () => {
       
     // },[])
 
-    useEffect(()=>{
-        (async()=>{
-            const res =await youtubeGetAllvideosOfaPlaylist(playlistId)
-            console.log(res)
-        })()
-    },[])
+    // useEffect(()=>{
+    //     (async()=>{
+    //         const res =await youtubeGetAllvideosOfaPlaylist("PLzRi2Ammpcu2pNQvT8N_jBPxjQow-mGo-")
+    //         console.log(res)
+    //     })()
+    // },[])
+
+
+
+    React.useEffect(()=>{
+      (async()=>{
+          const res =await youtubeGetPlaylists(channelId)
+          const data = res?.map(item=>{
+            let description = item?.snippet?.description?item?.snippet?.description:item?.snippet?.localized?.title
+            description=description.split("\n")[0]
+            return {id:item.id, title:description, thumbnail:item?.snippet?.thumbnails?.maxres?.url}
+          })
+          console.log(data)
+          setPlaylists(data)
+      })()
+  },[])
 
     return (
       <Box sx={{
-        backgroundImage: `linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.8)), url(${bg})`,
-        backgroundPosition: "center center",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
+        // backgroundImage: `linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,.3)), url(${bg})`,
+        // backgroundPosition: "center center",
+        //   backgroundSize: "cover",
+        //   backgroundRepeat: "no-repeat",
+      
       }}>
   
       <Box
@@ -135,49 +150,25 @@ const AddVideo = () => {
               xs:"3vw"
           },
           display:"flex",
-          flexDirection:{
-            xs:"column"
-          }
+          flexWrap:"wrap"
         }}
       >
+        <Box sx={{
+          display:"flex",
+          gap:"2vw",
+          flexWrap:"wrap", justifyContent:"space-around"
+         
+        }}>
+       
+       {
+          playlists?.map((item, key)=> <PlaylistItem id={item?.id} key={key} src={item?.thumbnail} title={item?.title}/>)
+          
+        }
+        </Box>
+       
+       
 
-{/* <textarea
-          style={{
-            width: "100%", // Inherit width from Box component
-            height: "100%", // Inherit height from Box component
-            padding: "10px", // Inherit padding from Box component
-            borderRadius: "5px", // Inherit borderRadius from Box component
-            border: "1px solid white", 
-            resize:"none",
-            background:"transparent",
-            color:"white"
 
-          }}
-        /> */}
-    <SyntaxHighlighter language="javascript" style={docco} customStyle={{ borderRadius:"20px", padding:"20px"}}>
-      {`const { loginService } = require("../userServices/loginService");
-const { signUpService } = require("../userServices/signUpService");
-const getLoggedInUserService = require("../userServices/getLoggedInUserService");
-
-const authController = {
-  async signup(req, res) {
-   await signUpService(req, res)
-  },
-
-  async login(req, res) {
-      await loginService(req, res)
-  },
-  async getLoggedInUser(req, res){
-      await getLoggedInUserService(req, res) 
-  },
-};
-module.exports = authController;
-        
-        `}
-    </SyntaxHighlighter>
-        
-        
-       <div ref={playerRef}></div>;
       </Box>
       </Box>
   
