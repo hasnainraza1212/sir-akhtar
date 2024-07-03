@@ -23,10 +23,36 @@ const VerifyEmail = () => {
   };
 
   const updateStatus = async () => {
-    // if (!params?._id || !params?.username || !params?.emailVerificationStatus) {
-    //   return;
-    // }
-
+    if (!params?._id) {
+      return dispatch(
+        handleSnackAlert({
+          open: true,
+          message: "ID not found. Please confirm the email from Gmail.",
+          severity: "error",
+        })
+      );
+    }
+    
+    if (!params?.username) {
+      return dispatch(
+        handleSnackAlert({
+          open: true,
+          message: "Email verification status not found. Please confirm the email from Gmail.",
+          severity: "error",
+        })
+      );
+    }
+    
+    if (!params?.username) {
+      return dispatch(
+        handleSnackAlert({
+          open: true,
+          message: "Username not found. Please confirm the email from Gmail.",
+          severity: "error",
+        })
+      );
+    }
+    
     try {
       const response = await axiosInstance.get(
         `/api/verification/update-status`,
