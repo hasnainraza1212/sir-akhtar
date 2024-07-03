@@ -10,7 +10,9 @@ const useAxios = () => {
   const accessToken = auth.accessToken;
   const refreshToken = auth.refreshToken;
   const axiosInstance = axios.create({
-    baseURL: "http://localhost:5000",
+    // baseURL: "http://localhost:5000",
+    baseURL: "https://study-space-backend-eta.vercel.app/",
+
     validateStatus: function (status) {
       return status >= 200 && status < 300; // default
     }
@@ -30,7 +32,7 @@ const useAxios = () => {
         originalRequest._retry = true;
         try {
           let response = await axios.post(
-            "http://localhost:5000/api/auth/refresh-access-token",
+            "https://study-space-backend-eta.vercel.app/api/auth/refresh-access-token",
             { refreshToken },
             { withCredentials: true }
           );

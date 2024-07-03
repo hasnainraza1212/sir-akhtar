@@ -1,6 +1,8 @@
 
 import axios from 'axios';
-export const host = "http://localhost:5000/api/"
+// export const host = "http://localhost:5000/api/"
+export const host = "https://study-space-backend-eta.vercel.app/api/"
+
 // export const host = "https://6z229h00-5000.inc1.devtunnels.ms/api/"
 export const youtubeURl = "https://www.googleapis.com/youtube/v3/"
 export const channelId = "UCMGXLIjKaoYdEK96s3qk_sw"
