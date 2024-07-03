@@ -40,6 +40,7 @@ const SinglePlaylist = () => {
     >
       {videosList.map((item, key) => (
         <>
+         
         <Box
           onClick={handleNavigate(item?.videoId)}
           key={key}

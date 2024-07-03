@@ -8,7 +8,7 @@ const SnackAlert = ({
   duration = 5000,
   anchorOrigin = { vertical: "top", horizontal: "right" },
   severity = "success",
-  message = "This is a success Alert inside a Snackbar!",
+  message = "",
   open = false,
   handleClose = () => {},
 }) => {
@@ -32,7 +32,7 @@ const SnackAlert = ({
     handleClose(); // Close Snackbar
   };
   return (
-    <Snackbar
+    message && <Snackbar
       anchorOrigin={anchorOrigin}
       open={open}
       autoHideDuration={null}

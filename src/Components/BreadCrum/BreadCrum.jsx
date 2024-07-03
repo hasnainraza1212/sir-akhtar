@@ -27,7 +27,7 @@ const BreadCrum = () => {
     const pages = location.pathname.split("/").filter((x) => x !== "");
     return pages[0];
   }, [location.pathname]);
-if(pathname.includes("/content")&& !auth?.authenticated){
+if(pathname.includes("/playlists") && pathname.includes("/video") && !auth?.authenticated){
   return null
 }
   return (
@@ -47,10 +47,14 @@ if(pathname.includes("/content")&& !auth?.authenticated){
       }}
     >
       <Box sx={{ display: "flex", gap: "10px" }}>
-        <Link className="manRope400" style={{ color: "white", textDecoration: "none" }} to="/">
+      {pathname.includes("/playlists") ||  pathname.includes("/video")?null: 
+      <>
+      <Link className="manRope400" style={{ color: "white", textDecoration: "none" }} to="/">
           Home
-        </Link>{" "}
+        </Link>
         {crumbs}
+      </>
+        }
       </Box>
       <Typography
         className="manRope800"

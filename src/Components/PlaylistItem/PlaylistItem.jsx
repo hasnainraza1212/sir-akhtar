@@ -8,7 +8,7 @@ const PlaylistItem = ({src="", title="",id="" }) => {
   const navigate = useNavigate()
   const handleNavigate = ()=>{
     if(id){
-      navigate(`/playlist/${id}`)
+      navigate(`/videos/${id}`)
     }
   }
   return (

@@ -7,6 +7,41 @@ export const channelId = "UCMGXLIjKaoYdEK96s3qk_sw"
 export const apiKey = 'AIzaSyAbBDD2WRQ_dAVqTpgFZL6SYn7J80lqCiY';
 
 
+
+// const axiosInstance = axios.create({
+//   baseURL: host,
+// });
+
+// // Adding request interceptor
+// axiosInstance.interceptors.request.use(
+//   (config) => {
+//     // If you need to add authorization token dynamically, you can do it here
+//     const token = localStorage.getItem('authToken'); // or get the token from any other source
+//     if (token) {
+//       config.headers['Authorization'] = `Bearer ${token}`;
+//     }
+//     return config;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   }
+// );
+
+// // Adding response interceptor
+// axiosInstance.interceptors.response.use(
+//   (response) => {
+//     return response;
+//   },
+//   (error) => {
+//     // Handle error response globally
+//     console.error('Error:', error.response?.data || error.message);
+//     return Promise.reject(error);
+//   }
+// );
+
+
+
+
 export const Post = async (url,data) => {
   try {
     const response = await axios.post(host+url, data);
@@ -36,7 +71,7 @@ export const Get = async (url,token) => {
           params: {
             part:"snippet,contentDetails,status, id, localizations, player",
             channelId: channelId,
-            maxResults: 50,
+            maxResults: 100,
             key: apiKey,
           },
         }
@@ -61,7 +96,7 @@ export const Get = async (url,token) => {
           params: {
             part: 'snippet',
             playlistId: playlistId,
-            maxResults: 50, // Adjust this as needed
+            maxResults: 100, // Adjust this as needed
             key: apiKey,
           },
         }
@@ -79,26 +114,3 @@ export const Get = async (url,token) => {
     }
      
   }
-
-
-  const fetchPlaylists = async () => {
-    const url = `https://www.googleapis.com/youtube/v3/playlists`;
-    
-    try {
-      const response = await axios.get(url, {
-        params: {
-          part: 'snippet,contentDetails',
-          channelId: channelId,
-          maxResults: 50, // Max number of playlists to fetch (50 is the maximum allowed by the API)
-          key: apiKey
-        }
-      });
-      
-      const playlists = response.data.items;
-    
-    } catch (error) {
-      console.error('Error fetching playlists:', error.response ? error.response.data : error.message);
-    }
-  };
-  
-  fetchPlaylists()

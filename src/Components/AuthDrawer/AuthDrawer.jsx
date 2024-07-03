@@ -1,20 +1,10 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+
 import { Menu, MenuItem, Drawer as MuiDrawer, Typography } from "@mui/material";
-import { Dropdown as MuiDropDown } from '@mui/base/Dropdown';
 import { IoCloseOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { AiFillDelete } from "react-icons/ai";
-import zIndex from "@mui/material/styles/zIndex";
-import inion from "./../../assets/images/onion.png";
-import CartItem from "../CartItem/CartItem";
 import Login from "../Login/Login";
 import Signup from "../SignUp/SignUp";
 import { GoogleReCaptchaProvider, GoogleReCaptcha } from "react-google-recaptcha-v3";
@@ -67,13 +57,13 @@ const setTokenFunc = (getToken) => {
 
   return (
     <div>
-       <GoogleReCaptchaProvider reCaptchaKey={"6Ld21-gpAAAAAILoc4ASgCJnJgKiHSogO20Ge83o"}>
+       {/* <GoogleReCaptchaProvider reCaptchaKey={"6Ld21-gpAAAAAILoc4ASgCJnJgKiHSogO20Ge83o"}>
           <GoogleReCaptcha
             className="google-recaptcha-custom-class"
             onVerify={setTokenFunc}
             refreshReCaptcha={refreshReCaptcha}
           />
-        </GoogleReCaptchaProvider>
+        </GoogleReCaptchaProvider> */}
       <MuiDrawer
         anchor={"right"}
         sx={{ position: "relative" }}

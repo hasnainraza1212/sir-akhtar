@@ -1,69 +1,18 @@
-import React, { useEffect, useMemo } from "react";
-import hero from "./../../assets/images/hero.png";
-import v from "./../../assets/images/v.png";
+import React from "react";
 import bg from "./../../assets/images/bg.jpg";
 import cube from "./../../assets/images/cube.jpg";
-import studySpace from "./../../assets/images/studyspace.png";
-import featureManAndFlower from "./../../assets/images/featureManAndFlower.png";
-import featureTrackter from "./../../assets/images/featureTrackter.png";
 import { Box, Typography } from "@mui/material";
 import Button from "../../Components/Button/Button";
-import goldLeaf from "./../../assets/images/goldLeaf.png";
-import playIcon from "./../../assets/images/playIcon.png";
-import farmVideo1 from "./../../assets/videos/farmVideo1.mp4";
-VideoBox;
-import FeatureCard from "../../Components/FeatureCard/FeatureCard";
 import {
-  featureCardData,
-  featureCheckList,
-  featuresIconHadings,
-  healthyCards,
-  products,
+  techCard,
 } from "../../utils/utils";
-import TeaserBox from "../../Components/TeaserBox/TeaserBox";
-import IconicHeading from "../../Components/IconicHeading/IconicHeading";
-import ChecklistItem from "../../Components/ChecklistItem/ChecklistItem";
 import Heading from "../../Components/Heading/Heading";
-import Product from "../../Components/ProductCard/ProductCard";
-import VeggiesCard from "../../Components/VeggiesCard/VeggiesCard";
+import YoutubeCard from "../../Components/YoutubeCard/YoutubeCard";
 import SnackAlert from "../../Components/SnackAlert/SnackAlert";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { handleSnackAlert } from "../../Redux/Slice/SnackAlertSlice/SnackAlertSlice";
-import { addItemInCart } from "../../Redux/Slice/CartSlice/CartSlice";
-import VideoBox from "../../Components/VideoBox/VideoBox";
 const Home = () => {
   const snackAlert = useSelector((state) => state.snackAlert);
-  let cart = useSelector((state) => state?.cart);
-  const dispatch = useDispatch();
-  const cb = (data) => {
-    const existingItem = cart.some((item) => item?.id === data?.id);
-    if (existingItem) {
-      return dispatch(
-        handleSnackAlert({
-          open: true,
-          severity: "error",
-          message: `${data?.name} already added into cart.`,
-        })
-      );
-    }
-    dispatch(
-      handleSnackAlert({
-        open: true,
-        severity: "success",
-        message: `${data?.name} added to cart.`,
-      })
-    );
-    let newItem = [data]?.map((item) => {
-      const { src, ...rest } = item;
-      return { ...rest, count: 1 };
-    });
-    // window?.localStorage?.setItem(
-    //   "cart",
-    //   JSON.stringify([...cart, ...newItem])
-    // );
-    dispatch(addItemInCart(...newItem));
-  };
-
   return (
     <Box>
       {/* Hero section */}
@@ -265,147 +214,13 @@ const Home = () => {
             },
           }}
         >
-          {featureCardData.map((x, i) => (
-            <Box
-              key={i}
-              sx={{
-                flexBasis: {
-                  lg: "390px",
-                  md: "270px",
-                  xs: "100%",
-                  flexGrow: "1",
-                  flexShrink: "1",
-                },
-                borderRadius: "10px",
-              }}
-            >
-              <FeatureCard
-                src={x.src}
-                heading={x.heading}
-                title={x.title}
-                iconSrc={x.iconSrc}
-              />
-            </Box>
-          ))}
+       
         </Box>
 
-        {/* intro */}
-        {/* <Box
-          sx={{
-            maxWidth: "1200px",
-            boxSizing: "border-box",
-            padding: {
-              lg: "106px 30px",
-              xs: "50px 30px",
-            },
-            margin: "auto",
-            display: "flex",
-          }}
-        >
-          <Box
-            sx={{
-              alignItems: "center",
-              justifyContent: "center",
-              position: "relative",
-              flexBasis: {
-                md: "50%",
-              },
-              display: {
-                md: "block",
-                xs: "none",
-              },
-            }}
-          >
-            <Box
-              sx={{
-                width: "500px",
-                height: "500px",
-                borderRadius: "50%",
-                background: `url(${featureTrackter})`,
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-              }}
-            >
-              <Box
-                sx={{
-                  position: "absolute",
-                  bottom: "50px",
-                  left: "-30px",
-                  border: "8px solid white",
-                  width: "200px",
-                  height: "200px",
-                  borderRadius: "50%",
-                  background: `url(${featureManAndFlower})`,
-                  backgroundPosition: "center",
-                  backgroundSize: "cover",
-                  backgroundRepeat: "no-repeat",
-                }}
-              ></Box>
-            </Box>
-          </Box>
-          <Box
-            sx={{
-              flexBasis: {
-                md: "50%",
-                xs: "100%",
-              },
-            }}
-          >
-            <TeaserBox
-              title="Our Introductions"
-              heading="Agriculture & Organic Product Farm"
-              subHeading="Agrios is the largest global organic farm."
-              text="There are many variations of passages of lorem ipsum available but the
-              majority have suffered alteration in some form by injected humor or
-              random word which don’t look even."
-            />
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: {
-                  md: "row",
-                  xs: "column",
-                },
-                m: {
-                  md: "40px 0 35px 0",
-                  xs: "30px 0 25px 0",
-                },
-                gap: "44px",
-              }}
-            >
-              {featuresIconHadings.map((x, i) => (
-                <IconicHeading heading={x.heading} src={x.src} key={i} />
-              ))}
-            </Box>
-            {featureCheckList.map((x, i) => (
-              <ChecklistItem text={x.text} src={x.src} key={i} />
-            ))}
-            <Box
-              sx={{
-                mt: {
-                  md: "40px",
-                  xs: "30px",
-                },
-              }}
-            >
-              <Button
-                text={"Discover More"}
-                BgColor={"#4BAF47"}
-                hoverBgColor={"#47d742"}
-                textColor="white"
-                link={"/projects"}
-              >
-                Discover More
-              </Button>
-            </Box>
-          </Box>
-        </Box> */}
       </Box>
 
       {/* offering section */}
       <Box>
-        {/* products */}
         <Box
           sx={{
             maxWidth: "1200px",
@@ -444,22 +259,7 @@ const Home = () => {
                 gap: "50px",
             }}
           >
-            {products.map((x, i) => (
-              <Box
-                key={i}
-                sx={{
-                  flexBasis:"320px",
-                  flexGrow:"1", flexShrink:"0",
-                 
-                }}
-              >
-                <VideoBox
-                  title="ECO-Friendly Products can be Made from Scratch"
-                  icon={playIcon}
-                  videoUri={farmVideo1}
-                />
-              </Box>
-            ))}
+            
           </Box>
         </Box>
         {/* Healthy card */}
@@ -489,8 +289,8 @@ const Home = () => {
             },
           }}
         >
-          {healthyCards.map((x, i) => (
-            <VeggiesCard
+          {techCard.map((x, i) => (
+            <YoutubeCard
               src={x.src}
               title={x.title}
               heading={x.heading}

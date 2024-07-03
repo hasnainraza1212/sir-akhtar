@@ -3,37 +3,22 @@ import { Box, FormControl, OutlinedInput, Tab, Tabs } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import HeaderIcon from "../HeaderIcon/HeaderIcon";
 import {
-  contactHeaderData,
-  darkSocialMediaHandles,
   headerIcons,
-  manageContent,
   tabsArray,
 } from "../../utils/utils.jsx";
-import darklogo from "./../../assets/images/darklogo.png";
-import SocialIcon from "../SocialIcon/SocialIcon.jsx";
-import ContactComponent from "../ContactComponent/ContactComponent.jsx";
 import BreadCrum from "../BreadCrum/BreadCrum.jsx";
 import AuthDrawer from "../AuthDrawer/AuthDrawer.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import { upateNewsCards } from "../../Redux/Slice/NewsSlice/NewsSlice.js";
-import { updateProductsCards } from "../../Redux/Slice/ProductSlice/ProductSlice.js";
 import { handleAuth } from "../../Redux/Slice/UserSlice/UserSlice.js";
 import { handleSnackAlert } from "../../Redux/Slice/SnackAlertSlice/SnackAlertSlice.js";
-import CustomDropDown from "../CustomDropDown/CustomDropDown.jsx";
-import { channelId, youtubeGetPlaylists } from "../../API/Requests/Requests.js";
-
 const Header = () => {
   const dispatch = useDispatch()
-  const news = useSelector(state=>state?.news)
   const auth = useSelector(state=>state?.auth)
-  const isAdmin = auth?.user?.type==="admin"
   const navigate = useNavigate();
   const {pathname} = useLocation()
   const [value, setValue] = React.useState(0);
   const [input, setInput] = React.useState("")
   const [openAuthForm, setOpenAuthForm] = React.useState(false);
-  const [openProfileDropDown, setOpenProfileDropDown] = React.useState(false)
-  const [playlists, setPlaylists] = React.useState([])
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -67,7 +52,7 @@ const Header = () => {
         message:"Logout successfully"
     }))
 
-      dispatch(handleAuth({ user: null, token: null, authenticated: false }))
+      dispatch(handleAuth({ user: null, accessToken:null, refreshToken:null, authenticated: false }))
       if(pathname!=="/"){
         navigate("/")
 
@@ -88,18 +73,7 @@ const Header = () => {
 
   }
   const headerIconsConditionallyRender = headerIcons.filter(item=>item.condition(auth))
-  React.useEffect(()=>{
-    (async()=>{
-        const res =await youtubeGetPlaylists(channelId)
-        const data = res?.map(item=>{
-          let description = item?.snippet?.description?item?.snippet?.description:item?.snippet?.localized?.title
-          description=description.split("\n")[0]
-          return {playLisstID:item.id, title:description
-          }
-        })
-        setPlaylists(data)
-    })()
-},[])
+
   return (
     <Box sx={{ width: "100%" }}>
    
@@ -136,7 +110,6 @@ const Header = () => {
                 }}
               />
             ))}
-          {/* {isAdmin && <CustomDropDown title={"Manage Content"} data={playlists}/>} */}
           </Tabs>
         </Box>
         <Box>

@@ -1,8 +1,8 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React, { memo } from "react";
 import logo from "./../../assets/images/logo.png";
 import FooterHeading from "./../FooterHeading/FooterHeading.jsx";
-import { contactData, newsData, socialMediaHandles } from "../../utils/utils.jsx";
+import { contactData, socialMediaHandles } from "../../utils/utils.jsx";
 import FooterPageList from "../FooterPageList/FooterPageList.jsx";
 import FooterNews from "../FooterNews/FooterNews.jsx";
 import FooterContact from "../FooterContact/FooterContact.jsx";
@@ -58,29 +58,6 @@ const Footer = () => {
           <FooterHeading text={"Explore"} />
           <FooterPageList />
         </Box>
-        {/* <Box>
-          <FooterHeading text={"News"} />
-          <Box
-            sx={{
-              padding: {xs:0, md:"0 2.54rem 0 2.25rem" ,lg:"0 5.54rem 0 6.25rem"},
-              minWidth: {
-                xs: 0,
-                lg: "12.25rem",
-              },
-            }}
-          >
-            {newsData.map((x, i) => (
-              <Box
-                key={i}
-                sx={{
-                  mb: "1.78rem",
-                }}
-              >
-                <FooterNews news={x.news} date={x.date} />
-              </Box>
-            ))}
-          </Box>
-        </Box> */}
         <Box>
           <FooterHeading text={"Contact"} />
           <Box>

@@ -1,15 +1,7 @@
-import {BrowserRouter, Routes, Route, useLocation} from "react-router-dom"
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"
 import Home from './pages/Home/Home'
-import About from './pages/About/About'
-import Contact from './pages/Contact/Contact'
 import Layout from './pages/Layout/Layout'
-import Services from "./pages/Services/Services"
-import Projects from "./pages/Projects/Projects"
-import News from "./pages/News/News"
-import Shop from "./pages/Shop/Shop"
 import { useEffect, useMemo, useState } from "react"
-import DetailedNews from "./pages/DetailedNews/DetailedNews"
-import Product from "./pages/Product/Product"
 import Construction from "./pages/Construction/Construction"
 import Profile from "./pages/Profile/Profile"
 import Protected from "./pages/Protected/Protected"
@@ -17,65 +9,59 @@ import ProtectedAdmin from "./pages/ProtectedAdmin/ProtectedAdmin"
 import Content from "./pages/Content/Content"
 import SinglePlaylist from "./Components/SinglePlaylist/SinglePlaylist"
 import CustomVideo from "./Components/CustomVideo/CustomVideo"
+import VerifyPhone from "./pages/VerifyPhone/VerifyPhone"
+import VerifyEmail from "./pages/VerifyEmail/VerifyEmail"
+import Courses from "./pages/Courses/Courses"
+import CoursePage from "./pages/CoursePage/CoursePage"
 
 function App() {
-  const [windowWidth, setWindowWidth] = useState(window?.innerWidth||0)
-  const isLargeScreen =  useMemo(()=>{return windowWidth<1200?false:true},[windowWidth])
+  const [windowWidth, setWindowWidth] = useState(window?.innerWidth || 0)
+  const isLargeScreen = useMemo(() => { return windowWidth < 1200 ? false : true }, [windowWidth])
   function ScrollToTop() {
     const { pathname } = useLocation();
     useEffect(() => {
 
-      if(!pathname.includes("news")){
+      if (!pathname.includes("news")) {
         window?.scrollTo(0, 0);
       }
-      else if(pathname.includes("news")&&!isLargeScreen){
+      else if (pathname.includes("news") && !isLargeScreen) {
         window?.scrollTo(0, 0);
 
       }
     }, [pathname]);
-  
+
     return null;
   }
-useEffect(()=>{
-  window.addEventListener("resize", ()=>{setWindowWidth(window?.innerWidth||0)})
-  return ()=>{
-  window.removeEventListener("resize", ()=>{setWindowWidth(window?.innerWidth||0)})
-  }
-},[])
+  useEffect(() => {
+    window.addEventListener("resize", () => { setWindowWidth(window?.innerWidth || 0) })
+    return () => {
+      window.removeEventListener("resize", () => { setWindowWidth(window?.innerWidth || 0) })
+    }
+  }, [])
   return (
-<BrowserRouter>
-<ScrollToTop />
-  <Routes>
-    <Route path="/" element={<Layout />}>
-      <Route index element={<Home />} />
-      <Route path="profile" element={<Protected children={<Profile />}/>}/>
-      <Route path="playlists" element={<Protected children={<Content />} />} />
-        <Route path="playlist/:id" element={<Protected children={<SinglePlaylist />} />} />
-        <Route path="video/:id" element={<Protected children={<CustomVideo />} />} />
+    <BrowserRouter>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="profile" element={<Protected children={<Profile />} />} />
+          <Route path="playlists" element={<Protected children={<Content />} />} />
+          <Route path="videos/:id" element={<Protected children={<SinglePlaylist />} />} />
+          <Route path="video/:id" element={<Protected children={<CustomVideo />} />} />
+          <Route path="verify-phone" element={<Protected children={<VerifyPhone />} />} />
+          <Route path="verify-email" element={<Protected children={<VerifyEmail />} />} />
+          <Route path="courses" element={<Courses />} />
+          <Route path="courses/:id" element={<CoursePage />} />
+
+          <Route path="admin/*" element={<Protected children={<ProtectedAdmin children={<Content />} />} />} />
+          <Route path="/admin/content" element={<Protected children={<ProtectedAdmin children={<Content />} />} />} />
+          <Route path="*" element={<Construction />} />
 
 
-
-      <Route path="admin/*" element={<Protected children={<ProtectedAdmin children={<Content/>} />}/>}/>
-      <Route path="/admin/content" element={<Protected children={<ProtectedAdmin children={<Content/>} />}/>}/>
-
-
-      {/* <Route path="about" element={<About />} />
-      <Route path="contact" element={<Contact />} />
-      <Route path="services" element={<Services />} />
-      <Route path="farmers" element={<Services />} />
-      <Route path="projects" element={<Projects />} />
-      <Route path="news" element={<News />} />
-      <Route path="news/:id" element={<DetailedNews />} />
-      <Route path="products/:id" element={<Product />} />
-      <Route path="shop" element={<Shop />} />
-      <Route path="shop/product/order" element={<Shop />} /> */}
-      <Route path="*" element={<Construction />} />
-      
-
-      {/* Add other routes as needed */}
-    </Route>
-  </Routes>
-</BrowserRouter>
+          {/* Add other routes as needed */}
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 

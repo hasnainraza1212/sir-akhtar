@@ -42,7 +42,7 @@ const Login = ({cb=()=>{}, toggleAuthForm=()=>{}, closeAuthForm=()=>{}, handlere
         const response = await login({...details, token:captchaToken})
         console.log(response)
       if (response?.success) {
-            const data = {user: response.user, token:response.token, authenticated:true }
+            const data = {user: response.user, accessToken:response.accessToken, refreshToken:response.refreshToken, authenticated:true }
             dispatch(handleAuth(data))
             setIsLoading(false)
             setDisabled(false)

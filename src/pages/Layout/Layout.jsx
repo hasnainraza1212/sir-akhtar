@@ -1,17 +1,26 @@
 import React, { useEffect } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useSearchParams } from "react-router-dom";
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import { Box } from "@mui/material";
 import Drawer from "../../Components/Drawer/Drawer";
 import { useDispatch, useSelector } from "react-redux";
-import { Login } from "../../API/EndPoints/Endpoints";
 import { handleSnackAlert } from "../../Redux/Slice/SnackAlertSlice/SnackAlertSlice";
 import SnackAlert from "../../Components/SnackAlert/SnackAlert";
+import useAxios from "../../API/useAxios/useAxios";
+import { handleAuth } from "../../Redux/Slice/UserSlice/UserSlice";
 
 const Layout = () => {
+  const axiosInstance = useAxios()
   const auth = useSelector(state=>state?.auth)
   const {pathname}= useLocation()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const params = {
+   _id: searchParams.get("_id"),
+   username: searchParams.get("username"),
+   emailVerificationStatus: searchParams.get("emailVerificationStatus")
+
+  }
 
   // const {pathname} =location;
   const snackAlert = useSelector(state=> state?.snackAlert)
@@ -22,6 +31,17 @@ const Layout = () => {
   }))
   }
 
+
+  useEffect(()=>{
+      (async()=>{
+        if(!params?._id && !params?.username && !params?.emailVerificationStatus){
+          const response = await axiosInstance.get("/api/auth/profile",{withCredentials:true})
+          console.log(response?.data)
+          dispatch(handleAuth(response?.data));
+      }
+      })()
+
+  },[])
   return (
     <div className="layout">
       <Box

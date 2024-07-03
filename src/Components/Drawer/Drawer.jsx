@@ -29,7 +29,7 @@ const Drawer = () => {
         message:"Logout successfully"
     }))
 
-      dispatch(handleAuth({ user: null, token: null, authenticated: false }))
+      dispatch(handleAuth({ user: null,  accessToken:null, refreshToken:null, authenticated: false }))
       if(pathname!=="/"){
         navigate("/")
 
