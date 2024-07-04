@@ -33,10 +33,11 @@ const Protected = ({ children }) => {
         else if (auth?.authenticated && !emailVerificationStatus) {
             if(!params?._id && !params?.username && !params?.emailVerificationStatus){
                 dispatch(handleSnackAlert({ open: true, message: "Please verify your email.", severity: "error" }))
+                // if (!pathname.includes("verify-email")) {
+                //     navigate("/verify-email", { replace: true })
+                // }
             }
-            if (!pathname.includes("verify-email")) {
-                navigate("/verify-email", { replace: true })
-            }
+           
         }
     }, [auth, phoneVerificationStatus, emailVerificationStatus, navigate, pathname, dispatch])
 
