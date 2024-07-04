@@ -11,7 +11,7 @@ const useAxios = () => {
   const refreshToken = auth.refreshToken;
   const axiosInstance = axios.create({
     // baseURL: "http://localhost:5000",
-    baseURL: "https://study-space-backend-eta.vercel.app/",
+    baseURL: "https://study-space-backend-eta.vercel.app",
 
     validateStatus: function (status) {
       return status >= 200 && status < 300; // default

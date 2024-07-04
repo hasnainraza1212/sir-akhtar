@@ -103,53 +103,58 @@ const VerifyEmail = () => {
       setIsDisabled(true);
     }
   };
+  useEffect(()=>{
+    (async()=>{
+          await updateStatus();
+    })()
+  },[])
 
-  const handleEmailVerification = async (id) => {
-    setIsDisabled(false);
+  // const handleEmailVerification = async (id) => {
+  //   setIsDisabled(false);
 
-    try {
-      await updateStatus();
+  //   try {
+  //     await updateStatus();
 
-      const response = await axiosInstance.get("/api/verification/status");
-      if (response?.data?.status === 200) {
-        if (response?.data?.verificationStatus?.emailVerified) {
-          clearInterval(id);
-          dispatch(
-            handleSnackAlert({
-              open: true,
-              message: response?.data?.message,
-              severity: "success",
-            })
-          );
-          navigate("/playlists");
-          setIsEmailVerified(true);
-        }
-      } else if (response?.data?.status === 404) {
-        dispatch(
-          handleSnackAlert({
-            open: true,
-            message: response?.data?.message,
-            severity: "error",
-          })
-        );
-      }
-    } catch (error) {
-      alert(error);
-      console.log("error", error);
-    }
-  };
+  //     const response = await axiosInstance.get("/api/verification/status");
+  //     if (response?.data?.status === 200) {
+  //       if (response?.data?.verificationStatus?.emailVerified) {
+  //         clearInterval(id);
+  //         dispatch(
+  //           handleSnackAlert({
+  //             open: true,
+  //             message: response?.data?.message,
+  //             severity: "success",
+  //           })
+  //         );
+  //         navigate("/playlists");
+  //         setIsEmailVerified(true);
+  //       }
+  //     } else if (response?.data?.status === 404) {
+  //       dispatch(
+  //         handleSnackAlert({
+  //           open: true,
+  //           message: response?.data?.message,
+  //           severity: "error",
+  //         })
+  //       );
+  //     }
+  //   } catch (error) {
+  //     alert(error);
+  //     console.log("error", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (params._id && params?.username && params?.emailVerificationStatus) {
-      const intervalId = setInterval(() => {
-        if (isDisabled) {
-          handleEmailVerification(intervalId);
-        }
-      }, 1000);
-      return () => clearInterval(intervalId);
-    }
-    handleEmailVerification("");
-  }, []);
+  // useEffect(() => {
+  //   if (params._id && params?.username && params?.emailVerificationStatus) {
+  //     const intervalId = setInterval(() => {
+  //       if (isDisabled) {
+  //         handleEmailVerification(intervalId);
+  //       }
+  //     }, 1000);
+  //     return () => clearInterval(intervalId);
+  //   }
+  //   handleEmailVerification("");
+  // }, []);
 
   if (emailVerificationStatus) {
     return <Navigate to="/playlists" replace={true} />;
