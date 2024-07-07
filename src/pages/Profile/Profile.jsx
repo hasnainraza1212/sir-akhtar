@@ -67,7 +67,7 @@ const Profile = () => {
             color: "white",
           }}
         >
-          {auth?.user?.username}
+          {auth?.username}
         </Typography>
        
       </Box>
@@ -88,7 +88,7 @@ const Profile = () => {
             color: "white",
           }}
         >
-          {auth?.user?.email}
+          {auth?.email}
         </Typography>
        
       </Box>
