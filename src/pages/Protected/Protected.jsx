@@ -31,10 +31,10 @@ const Protected = ({ children }) => {
         } 
         
         else if (auth?.authenticated && !emailVerificationStatus) {
-            if(!params?._id && !params?.username && !params?.emailVerificationStatus){
+            if((!params?._id || !params?.username || !params?.emailVerificationStatus) && !pathname.includes("verify-email")){
                 dispatch(handleSnackAlert({ open: true, message: "Please verify your email.", severity: "error" }))
                 // if (!pathname.includes("verify-email")) {
-                //     navigate("/verify-email", { replace: true })
+                    navigate("/verify-email", { replace: true })
                 // }
             }
            
