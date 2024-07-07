@@ -19,6 +19,8 @@ const Protected = ({ children }) => {
      emailVerificationStatus: searchParams.get("emailVerificationStatus")
   
     }
+    let regex = new RegExp("courses/:id".replace(":id", ".+"));
+    const isOnCoursePage = new RegExp("courses/:id".replace(":id", ".+"))
     useEffect(() => {
         if (!auth?.authenticated) {
             dispatch(handleSnackAlert({ open: true, message: "You're not Authorized, Login first.", severity: "error" }))
@@ -31,7 +33,7 @@ const Protected = ({ children }) => {
         } 
         
         else if (auth?.authenticated && !emailVerificationStatus) {
-            if((!params?._id || !params?.username || !params?.emailVerificationStatus) && !pathname.includes("verify-email")){
+            if((!params?._id || !params?.username || !params?.emailVerificationStatus) && !pathname.includes("verify-email") ){
                 dispatch(handleSnackAlert({ open: true, message: "Please verify your email.", severity: "error" }))
                 // if (!pathname.includes("verify-email")) {
                     console.log("verify email page pr ni hon")

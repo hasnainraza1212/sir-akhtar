@@ -52,10 +52,10 @@ export const pages = [
     name: "Home",
     link: "/",
   },
-  {
-    name: "youtube",
-    link: "/playlists",
-  },
+  // {
+  //   name: "youtube",
+  //   link: "/playlists",
+  // },
   {
     name: "courses",
     link: "/courses",
@@ -74,7 +74,7 @@ export const contactData = [
 export const tabsArray = [
   { tabName: "Home", link: "/" },
   { tabName: "About", link: "/about" },
-  { tabName: "youtube", link: "/playlists" },
+  // { tabName: "youtube", link: "/playlists" },
   { tabName: "courses", link: "/courses" }
 ];
 
