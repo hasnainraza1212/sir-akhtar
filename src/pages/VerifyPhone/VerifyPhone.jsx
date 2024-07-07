@@ -1,8 +1,28 @@
 import { Box } from '@mui/material';
 import React, { useState } from 'react';
 import OtpInput from 'react-otp-input';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
+import { handleSnackAlert } from '../../Redux/Slice/SnackAlertSlice/SnackAlertSlice';
 const VerifyPhone = () => {
   const [otp, setOtp] = useState('');
+  const dispatch = useDispatch()
+
+  const auth = useSelector(state=>state.auth)
+  const { phoneVerificationStatus, emailVerificationStatus } = auth
+  
+  if(phoneVerificationStatus && !emailVerificationStatus){
+    return <Navigate to="/verify-email"/>
+  }
+  if(phoneVerificationStatus && emailVerificationStatus){
+    return <Navigate to="/courses"/>
+  }
+
+  if(!auth.authenticated){
+    dispatch(handleSnackAlert({ open: true, message: "You're not Authorized, Login first.", severity: "error" }))
+
+    return <Navigate to="/"/>
+  }
   return (
     <Box sx={{
         background:"black"
@@ -41,10 +61,6 @@ const VerifyPhone = () => {
       />
 
       </Box>
-
-      
-      
-      
       </Box>
   )
 }

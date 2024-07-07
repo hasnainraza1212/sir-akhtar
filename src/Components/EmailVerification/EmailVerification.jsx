@@ -12,7 +12,6 @@ function EmailVerification({ isEmailVerified }) {
   const dispatch = useDispatch()
   const handleEmail = async () => {
     const response = await axiosInstance.post(`/api/auth/send-verification-mail`);
-    console.log(response)
     dispatch(handleSnackAlert({ open: true, message: "Verification Email sent successfully", severity: "success" }))
 
   }

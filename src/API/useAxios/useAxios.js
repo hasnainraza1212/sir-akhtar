@@ -10,8 +10,8 @@ const useAxios = () => {
   const accessToken = auth.accessToken;
   const refreshToken = auth.refreshToken;
   const axiosInstance = axios.create({
-    // baseURL: "http://localhost:5000",
-    baseURL: "https://study-space-backend-eta.vercel.app",
+    baseURL: "http://localhost:5000",
+    // baseURL: "https://study-space-backend-eta.vercel.app",
 
     validateStatus: function (status) {
       return status >= 200 && status < 300; // default
@@ -32,19 +32,19 @@ const useAxios = () => {
         originalRequest._retry = true;
         try {
           let response = await axios.post(
-            "https://study-space-backend-eta.vercel.app/api/auth/refresh-access-token",
-            // "http://localhost:5000/api/auth/refresh-access-token",
+            // "https://study-space-backend-eta.vercel.app/api/auth/refresh-access-token",
+            "http://localhost:5000/api/auth/refresh-access-token",
 
             { refreshToken },
             { withCredentials: true }
           );
           response = response.data;
-          if (response.success) {
+          if (response.success && response.status===200) {
             const data = {
               accessToken: response.accessToken,
             };
             dispatch(handleAuth(data));
-            axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + response.data.accessToken;
+            axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + response.accessToken;
             return await axiosInstance(originalRequest);
             //set the auth state with response user
           }
@@ -53,11 +53,7 @@ const useAxios = () => {
           if (error?.response && error?.response?.status === 403) {
             dispatch(
               handleAuth({
-                user: null,
-                accessToken: null,
-                refreshToken: null,
-                authenticated: false,
-              })
+                username:null, email:null, phoneVerificationStatus:null, emailVerificationStatus:null, _id:null, type:null, accessToken:null, refreshToken:null,authenticated:false})
             );
             navigate("/", { replace: true });
             // set the auth state null

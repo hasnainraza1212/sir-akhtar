@@ -48,16 +48,13 @@ function App() {
           <Route path="playlists" element={<Protected children={<Content />} />} />
           <Route path="videos/:id" element={<Protected children={<SinglePlaylist />} />} />
           <Route path="video/:id" element={<Protected children={<CustomVideo />} />} />
-          <Route path="verify-phone" element={<Protected children={<VerifyPhone />} />} />
-          <Route path="verify-email" element={<Protected children={<VerifyEmail />} />} />
+          <Route path="verify-phone" element={<VerifyPhone />} />
+          <Route path="verify-email" element={<VerifyEmail />} />
           <Route path="courses" element={<Courses />} />
           <Route path="courses/:id" element={<Protected children={<CoursePage />}/>} />
           <Route path="admin/*" element={<Protected children={<ProtectedAdmin children={<Content />} />} />} />
           <Route path="/admin/content" element={<Protected children={<ProtectedAdmin children={<Content />} />} />} />
           <Route path="*" element={<Construction />} />
-
-
-          {/* Add other routes as needed */}
         </Route>
       </Routes>
     </BrowserRouter>

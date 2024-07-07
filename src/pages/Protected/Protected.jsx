@@ -8,8 +8,7 @@ import useAxios from '../../API/useAxios/useAxios'
 
 const Protected = ({ children }) => {
     const auth = useSelector(state => state?.auth)
-    const { user } = auth
-    const { phoneVerificationStatus, emailVerificationStatus } = user || {}
+    const { phoneVerificationStatus, emailVerificationStatus }  = auth
     const navigate = useNavigate()
     const { pathname } = useLocation()
     const dispatch = useDispatch()
@@ -20,9 +19,6 @@ const Protected = ({ children }) => {
      emailVerificationStatus: searchParams.get("emailVerificationStatus")
   
     }
-    let regex = new RegExp("courses/:id".replace(":id", ".+"));
-    const isOnCoursePage = new RegExp("courses/:id".replace(":id", ".+"))
-
     useEffect(() => {
         if (!auth?.authenticated) {
             dispatch(handleSnackAlert({ open: true, message: "You're not Authorized, Login first.", severity: "error" }))
@@ -37,11 +33,7 @@ const Protected = ({ children }) => {
         else if (auth?.authenticated && !emailVerificationStatus) {
             if((!params?._id || !params?.username || !params?.emailVerificationStatus) && !pathname.includes("verify-email") ){
                 dispatch(handleSnackAlert({ open: true, message: "Please verify your email.", severity: "error" }))
-                // if (!pathname.includes("verify-email")) {
                     console.log("verify email page pr ni hon");
-                  
-                    // navigate("/verify-email", { replace: true })
-                // }
             }
            
         }
@@ -51,10 +43,10 @@ const Protected = ({ children }) => {
         return null; // This will not render anything while navigate is in process
     } 
     if (auth?.authenticated && !phoneVerificationStatus) {
-        return <VerifyPhone />
+        return <Navigate to="/verify-phone" />
     }
     if (auth?.authenticated && !emailVerificationStatus) {
-        return <VerifyEmail />
+        return <Navigate to="/verify-email" />
     }
     return <div>{children}</div>
 }

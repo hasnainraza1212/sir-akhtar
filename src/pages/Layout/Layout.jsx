@@ -9,39 +9,44 @@ import { handleSnackAlert } from "../../Redux/Slice/SnackAlertSlice/SnackAlertSl
 import SnackAlert from "../../Components/SnackAlert/SnackAlert";
 import useAxios from "../../API/useAxios/useAxios";
 import { handleAuth } from "../../Redux/Slice/UserSlice/UserSlice";
+import axios from "axios";
 
 const Layout = () => {
   const axiosInstance = useAxios()
-  const auth = useSelector(state=>state?.auth)
-  const {pathname}= useLocation()
+  const auth = useSelector(state => state?.auth)
+  const { pathname } = useLocation()
   const [searchParams, setSearchParams] = useSearchParams()
   const params = {
-   _id: searchParams.get("_id"),
-   username: searchParams.get("username"),
-   emailVerificationStatus: searchParams.get("emailVerificationStatus")
+    _id: searchParams.get("_id"),
+    username: searchParams.get("username"),
+    emailVerificationStatus: searchParams.get("emailVerificationStatus")
 
   }
 
   // const {pathname} =location;
-  const snackAlert = useSelector(state=> state?.snackAlert)
+  const snackAlert = useSelector(state => state?.snackAlert)
   const dispatch = useDispatch()
-  const handleCloseSnackAlert=()=>{
-    dispatch(handleSnackAlert( {
-      open:false,
-  }))
+  const handleCloseSnackAlert = () => {
+    dispatch(handleSnackAlert({
+      open: false,
+    }))
   }
 
 
-  useEffect(()=>{
-      (async()=>{
-        if(!params?._id && !params?.username && !params?.emailVerificationStatus){
-          const response = await axiosInstance.get("/api/auth/profile",{withCredentials:true})
-          console.log(response?.data)
-          dispatch(handleAuth(response?.data));
-      }
-      })()
+  useEffect(() => {
+    (async () => {
+      if (!params?._id && !params?.username && !params?.emailVerificationStatus && auth.authenticated) {
+        const response = await axiosInstance.get("/api/auth/profile", { withCredentials: true })          
+        const data = {username:response?.data?.user?.username, email:response?.data?.user?.email, phoneVerificationStatus:response?.data?.user?.phoneVerificationStatus, emailVerificationStatus:response?.data?.user?.emailVerificationStatus, _id:response?.data?.user?._id, type:response?.data?.user?.type, refreshToken:response?.data?.user?.refreshToken,authenticated:response?.data?.success?true:false}
 
-  },[])
+        if(response?.data?.success && response?.data?.status===200){
+          dispatch(handleAuth(data));
+
+        }
+      }
+    })()
+
+  }, [])
   return (
     <div className="layout">
       <Box
@@ -70,16 +75,16 @@ const Layout = () => {
         >
           <Box >  <Drawer /></Box>
 
-        
+
         </Box>
       </Box>
       <div className="outlet">
         <Outlet />
       </div>
-     { (pathname.includes("/content")&& !auth?.authenticated)? null:
+      {(pathname.includes("/content") && !auth?.authenticated) ? null :
 
-      <Footer />}
-      <SnackAlert open={snackAlert?.open} message={snackAlert.message} severity={snackAlert?.severity} handleClose={handleCloseSnackAlert}/>
+        <Footer />}
+      <SnackAlert open={snackAlert?.open} message={snackAlert.message} severity={snackAlert?.severity} handleClose={handleCloseSnackAlert} />
     </div>
   );
 };

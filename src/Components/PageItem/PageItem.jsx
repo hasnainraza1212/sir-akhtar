@@ -8,7 +8,6 @@ const PageItem = ({
 }) => {
   const navigate=useNavigate()
   const handleClick = (link)=>()=>navigate(link)
-  console.log(link)
   return (
     <Box sx={{
         display:"flex",

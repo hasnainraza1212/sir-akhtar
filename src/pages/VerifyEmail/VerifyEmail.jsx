@@ -8,7 +8,7 @@ import { handleSnackAlert } from "../../Redux/Slice/SnackAlertSlice/SnackAlertSl
 
 const VerifyEmail = () => {
   const auth = useSelector((state) => state.auth);
-  const { emailVerificationStatus } = auth?.user;
+  const { emailVerificationStatus, phoneVerificationStatus } = auth
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const axiosInstance = useAxios();
   const dispatch = useDispatch();
@@ -68,11 +68,10 @@ const VerifyEmail = () => {
         if (response.status === 200) {
           dispatch(
             handleAuth({
-              user: {
-                ...auth.user,
+                ...auth,
                 emailVerificationStatus:
                   response?.data?.verificationStatus?.emailVerificationStatus,
-              },
+            
             })
           );
           dispatch(
@@ -96,7 +95,6 @@ const VerifyEmail = () => {
         }
       }
       else{
-        console.log(response)
       }
     } catch (error) {
       console.error(error);
@@ -108,55 +106,20 @@ const VerifyEmail = () => {
           await updateStatus();
     })()
   },[])
+  if(!auth.authenticated){
+   dispatch(handleSnackAlert({ open: true, message: "You're not Authorized, Login first.", severity: "error" }))
 
-  // const handleEmailVerification = async (id) => {
-  //   setIsDisabled(false);
+    return <Navigate to="/"/>
+  }
+  if(!phoneVerificationStatus ){
+    return <Navigate to="/verify-phone" replace={true} />;
 
-  //   try {
-  //     await updateStatus();
+  }
+  if(!phoneVerificationStatus && emailVerificationStatus){
+    return <Navigate to="/verify-phone" replace={true} />;
 
-  //     const response = await axiosInstance.get("/api/verification/status");
-  //     if (response?.data?.status === 200) {
-  //       if (response?.data?.verificationStatus?.emailVerified) {
-  //         clearInterval(id);
-  //         dispatch(
-  //           handleSnackAlert({
-  //             open: true,
-  //             message: response?.data?.message,
-  //             severity: "success",
-  //           })
-  //         );
-  //         navigate("/playlists");
-  //         setIsEmailVerified(true);
-  //       }
-  //     } else if (response?.data?.status === 404) {
-  //       dispatch(
-  //         handleSnackAlert({
-  //           open: true,
-  //           message: response?.data?.message,
-  //           severity: "error",
-  //         })
-  //       );
-  //     }
-  //   } catch (error) {
-  //     alert(error);
-  //     console.log("error", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (params._id && params?.username && params?.emailVerificationStatus) {
-  //     const intervalId = setInterval(() => {
-  //       if (isDisabled) {
-  //         handleEmailVerification(intervalId);
-  //       }
-  //     }, 1000);
-  //     return () => clearInterval(intervalId);
-  //   }
-  //   handleEmailVerification("");
-  // }, []);
-
-  if (emailVerificationStatus) {
+  }
+  if (phoneVerificationStatus && emailVerificationStatus) {
     return <Navigate to="/courses" replace={true} />;
   }
 

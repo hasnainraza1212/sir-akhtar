@@ -14,9 +14,6 @@ import { handleSnackAlert } from "../../Redux/Slice/SnackAlertSlice/SnackAlertSl
 const Home = () => {
   const snackAlert = useSelector((state) => state.snackAlert);
 const auth = useSelector(state=>state.auth)
-  useEffect(()=>{
-console.log("auth", auth)
-  },[])
   return (
     <Box>
       {/* Hero section */}

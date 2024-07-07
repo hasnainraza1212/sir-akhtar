@@ -52,7 +52,8 @@ const Header = () => {
         message:"Logout successfully"
     }))
 
-      dispatch(handleAuth({ user: null, accessToken:null, refreshToken:null, authenticated: false }))
+      dispatch(handleAuth({
+        username:null, email:null, phoneVerificationStatus:null, emailVerificationStatus:null, _id:null, type:null, accessToken:null, refreshToken:null,authenticated:false}))
       if(pathname!=="/"){
         navigate("/")
 
