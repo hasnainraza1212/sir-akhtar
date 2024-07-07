@@ -68,12 +68,17 @@ const VerifyEmail = () => {
         if (response.status === 200) {
           dispatch(
             handleAuth({
-                ...auth,
                 emailVerificationStatus:
                   response?.data?.verificationStatus?.emailVerificationStatus,
             
             })
           );
+          console.table({
+                  ...auth,
+                  emailVerificationStatus:
+                    response?.data?.verificationStatus?.emailVerificationStatus,
+              
+              })
           dispatch(
             handleSnackAlert({
               open: true,
