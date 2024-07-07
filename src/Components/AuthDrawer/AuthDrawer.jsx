@@ -57,13 +57,13 @@ const setTokenFunc = (getToken) => {
 
   return (
     <div>
-       {/* <GoogleReCaptchaProvider reCaptchaKey={"6Ld21-gpAAAAAILoc4ASgCJnJgKiHSogO20Ge83o"}>
+       <GoogleReCaptchaProvider reCaptchaKey={"6Ld21-gpAAAAAILoc4ASgCJnJgKiHSogO20Ge83o"}>
           <GoogleReCaptcha
             className="google-recaptcha-custom-class"
             onVerify={setTokenFunc}
             refreshReCaptcha={refreshReCaptcha}
           />
-        </GoogleReCaptchaProvider> */}
+        </GoogleReCaptchaProvider>
       <MuiDrawer
         anchor={"right"}
         sx={{ position: "relative" }}
