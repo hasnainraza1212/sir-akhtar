@@ -51,8 +51,7 @@ function App() {
           <Route path="verify-phone" element={<Protected children={<VerifyPhone />} />} />
           <Route path="verify-email" element={<Protected children={<VerifyEmail />} />} />
           <Route path="courses" element={<Courses />} />
-          <Route path="courses/:id" element={<CoursePage />} />
-
+          <Route path="courses/:id" element={<Protected children={<CoursePage />}/>} />
           <Route path="admin/*" element={<Protected children={<ProtectedAdmin children={<Content />} />} />} />
           <Route path="/admin/content" element={<Protected children={<ProtectedAdmin children={<Content />} />} />} />
           <Route path="*" element={<Construction />} />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import bg from "./../../assets/images/bg.jpg";
 import cube from "./../../assets/images/cube.jpg";
 import { Box, Typography } from "@mui/material";
@@ -13,6 +13,10 @@ import {  useSelector } from "react-redux";
 import { handleSnackAlert } from "../../Redux/Slice/SnackAlertSlice/SnackAlertSlice";
 const Home = () => {
   const snackAlert = useSelector((state) => state.snackAlert);
+const auth = useSelector(state=>state.auth)
+  useEffect(()=>{
+console.log("auth", auth)
+  },[])
   return (
     <Box>
       {/* Hero section */}

@@ -2,8 +2,20 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { FaRegPaperPlane } from "react-icons/fa6";
 import { FaRegCheckCircle } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { handleSnackAlert } from "../../Redux/Slice/SnackAlertSlice/SnackAlertSlice";
+import Button from "../Button/Button";
+import useAxios from "../../API/useAxios/useAxios";
 
 function EmailVerification({ isEmailVerified }) {
+  const axiosInstance = useAxios()
+  const dispatch = useDispatch()
+  const handleEmail = async () => {
+    const response = await axiosInstance.post(`/api/auth/send-verification-mail`);
+    console.log(response)
+    dispatch(handleSnackAlert({ open: true, message: "Verification Email sent successfully", severity: "success" }))
+
+  }
   return (
     <Box
       sx={{
@@ -39,7 +51,7 @@ function EmailVerification({ isEmailVerified }) {
         {isEmailVerified ? (
           <FaRegCheckCircle
             style={{
-              color:"#eec044",
+              color: "#eec044",
               fontSize: "inherit",
             }}
           />
@@ -59,7 +71,7 @@ function EmailVerification({ isEmailVerified }) {
         }}
       >
         <Typography
-        className="manRope800"
+          className="manRope800"
           sx={{
             fontSize: {
               xs: "25px",
@@ -72,10 +84,10 @@ function EmailVerification({ isEmailVerified }) {
           variant="h4"
           component="h1"
         >
-         {isEmailVerified? "Email Verification Completed":"Email Verification" }
+          {isEmailVerified ? "Email Verification Completed" : "Email Verification"}
         </Typography>
         <Typography
-        className="manRope600"
+          className="manRope600"
 
           sx={{
             fontSize: {
@@ -87,8 +99,21 @@ function EmailVerification({ isEmailVerified }) {
           }}
           variant="subtitle1"
         >
-         {isEmailVerified?"Thanks for verifying your email,  You'll be redirected to content page please wait for a while":" Please check your email for the verification link you signed in with to continue."}
+          {isEmailVerified ? "Thanks for verifying your email,  You'll be redirected to content page please wait for a while" : " Please check your email for the verification link you signed in with to continue."}
         </Typography>
+    {    !isEmailVerified  && <Box sx={{
+      mt:"20px"
+    }}>
+      <Button
+          cb={handleEmail}
+          text="Resend email"
+          textColor="black"
+          BgColor="#ffffff"
+          hoverBgColor="#f6fff5"
+          hoverTextColor="black"
+          fullWidth={false}
+          link="/"
+          isNavigate={false} /></Box>}
       </Box>
     </Box>
   );

@@ -83,7 +83,7 @@ const VerifyEmail = () => {
             })
           );
           setIsDisabled(true);
-          navigate("/playlists");
+          navigate("/courses");
         } else if (response.status === 404) {
           setIsDisabled(true);
           dispatch(
@@ -157,7 +157,7 @@ const VerifyEmail = () => {
   // }, []);
 
   if (emailVerificationStatus) {
-    return <Navigate to="/playlists" replace={true} />;
+    return <Navigate to="/courses" replace={true} />;
   }
 
   return <EmailVerification isEmailVerified={isEmailVerified} />;

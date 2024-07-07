@@ -4,6 +4,7 @@ import { Navigate, useLocation, useNavigate, useSearchParams } from 'react-route
 import { handleSnackAlert } from '../../Redux/Slice/SnackAlertSlice/SnackAlertSlice'
 import VerifyPhone from '../VerifyPhone/VerifyPhone'
 import VerifyEmail from '../VerifyEmail/VerifyEmail'
+import useAxios from '../../API/useAxios/useAxios'
 
 const Protected = ({ children }) => {
     const auth = useSelector(state => state?.auth)
@@ -21,6 +22,7 @@ const Protected = ({ children }) => {
     }
     let regex = new RegExp("courses/:id".replace(":id", ".+"));
     const isOnCoursePage = new RegExp("courses/:id".replace(":id", ".+"))
+
     useEffect(() => {
         if (!auth?.authenticated) {
             dispatch(handleSnackAlert({ open: true, message: "You're not Authorized, Login first.", severity: "error" }))
@@ -36,7 +38,8 @@ const Protected = ({ children }) => {
             if((!params?._id || !params?.username || !params?.emailVerificationStatus) && !pathname.includes("verify-email") ){
                 dispatch(handleSnackAlert({ open: true, message: "Please verify your email.", severity: "error" }))
                 // if (!pathname.includes("verify-email")) {
-                    console.log("verify email page pr ni hon")
+                    console.log("verify email page pr ni hon");
+                  
                     // navigate("/verify-email", { replace: true })
                 // }
             }
