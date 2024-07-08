@@ -13,6 +13,7 @@ import VerifyPhone from "./pages/VerifyPhone/VerifyPhone"
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail"
 import Courses from "./pages/Courses/Courses"
 import CoursePage from "./pages/CoursePage/CoursePage"
+import About from "./pages/About/About"
 
 function App() {
   const [windowWidth, setWindowWidth] = useState(window?.innerWidth || 0)
@@ -44,6 +45,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
           <Route path="profile" element={<Protected children={<Profile />} />} />
           <Route path="playlists" element={<Protected children={<Content />} />} />
           <Route path="videos/:id" element={<Protected children={<SinglePlaylist />} />} />

@@ -49,7 +49,7 @@ const YoutubeCard = ({title="",heading="", src=""}) => {
       marginBottom:"30px"
     }}>{heading}</Typography>
     <Button
-       link={"/shop"}
+       link={"/courses"}
       text={"Learn More"}
       BgColor={"#ffffff"}
       hoverBgColor={"#f6fff5"}

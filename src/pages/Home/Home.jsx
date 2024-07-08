@@ -4,6 +4,7 @@ import cube from "./../../assets/images/cube.jpg";
 import { Box, Typography } from "@mui/material";
 import Button from "../../Components/Button/Button";
 import {
+  expertiseCard,
   techCard,
 } from "../../utils/utils";
 import Heading from "../../Components/Heading/Heading";
@@ -11,6 +12,7 @@ import YoutubeCard from "../../Components/YoutubeCard/YoutubeCard";
 import SnackAlert from "../../Components/SnackAlert/SnackAlert";
 import {  useSelector } from "react-redux";
 import { handleSnackAlert } from "../../Redux/Slice/SnackAlertSlice/SnackAlertSlice";
+import FeatureCard from "../../Components/FeatureCard/FeatureCard";
 const Home = () => {
   const snackAlert = useSelector((state) => state.snackAlert);
 const auth = useSelector(state=>state.auth)
@@ -220,6 +222,73 @@ const auth = useSelector(state=>state.auth)
 
       </Box>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        {/* cards */}
+        <Box
+          sx={{
+            maxWidth: { md: "1200px", xs: "300px", sm: "450px" },
+
+            boxSizing: "border-box",
+            margin: "auto",
+            padding: {
+              md: "0 15px",
+              xs: "15px",
+            },
+            display: "flex",
+            flexDirection: {
+              md: "row",
+              xs: "column",
+            },
+            gap: "30px",
+            justifyContent: "space-between",
+            mt: {
+              md: "-60px",
+              xs: "0px",
+            },
+          }}
+        >
+          {expertiseCard.map((x, i) => (
+            <Box
+              key={i}
+              sx={{
+                flexBasis: {
+                  lg: "390px",
+                  md: "270px",
+                  xs: "100%",
+                  flexGrow: "1",
+                  flexShrink: "1",
+                },
+                borderRadius: "10px",
+              }}
+            >
+              <FeatureCard
+                src={x.src}
+                heading={x.heading}
+                title={x.title}
+                iconSrc={x.iconSrc}
+              />
+            </Box>
+          ))}
+        </Box>
+
+
       {/* offering section */}
       <Box>
         <Box
@@ -348,7 +417,7 @@ const auth = useSelector(state=>state.auth)
             hoverBgColor={"#f6fff5"}
             textColor="#1F1E17"
             hoverTextColor="#1F1E17"
-            link={"/shop"}
+            link={"/courses"}
           ></Button>
         </Box>
       </Box>

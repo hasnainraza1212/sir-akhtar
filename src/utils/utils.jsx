@@ -8,19 +8,26 @@ import marker from "./../assets/images/marker.png";
 import user from "./../assets/images/userdark.png";
 import authenticatedUser from "./../assets/images/authenticatedUser.png";
 import search from "./../assets/images/search.png";
+import dsAccounting from "./../assets/images/dsaccounting.jpg";
+import dsnotes from "./../assets/images/dsnotes.jpg";
+import dsMaths from "./../assets/images/dsMaths.jpg";
+
 import techcard1 from "./../assets/images/techcard1.jpg";
 import techcard2 from "./../assets/images/techcard2.jpg";
 import logout from "./../assets/images/logout.png";
 import Joi from "joi";
 
 // study space utils import
+
+//course page imports
 import pythonDataScience from "./../assets/images/pythonDataScience.jpg"
 import fullStackDevelopment from "./../assets/images/fullStackDevelopment.jpg"
 import javaBeginnerToPro from "./../assets/images/javaBeginnerToPro.jpg"
 import aiLearning from "./../assets/images/aiLearning.jpg"
 import machineLearning from "./../assets/images/machineLearning.jpg"
 
-
+// about page imports
+import goldenCheck from "./../assets/images/goldenCheck.png"
 
 
 
@@ -206,6 +213,31 @@ export const ValidateEmptyFields = (data={},state=()=>{} ) => {
 
 
 // study space utils
+
+//Home page 
+
+export const expertiseCard =  [
+  {
+    title:"Data Science",
+    heading:"Insights",
+    src:dsAccounting,
+    // iconSrc:wheatIcon
+  },
+  {
+    title:"Numerial Computing",
+    heading:"Algorithms",
+    src:dsnotes,
+    // iconSrc:veggiesIcon
+  },
+  {
+    title:"Business Stats",
+    heading:"Analytics",
+    src:dsMaths,
+    // iconSrc:honeyIcon
+  }
+]
+
+//courses page
 export const courses =[
   {
     "Course Title": "Mastering Python for Data Science",
@@ -246,4 +278,18 @@ export const courses =[
     course_id:"machine-learning"
 
   },
+]
+//courses page end
+
+//about page
+
+export const aboutPagesec1Points = [
+  {
+    text: "R Expertise: Proficient in Data Analysis and Visualization.",
+    src: goldenCheck
+  },
+  {
+    text: "Python Expertise: Skilled in Machine Learning and Automation.",
+    src: goldenCheck
+  }
 ]
