@@ -12,6 +12,7 @@ const AuthDrawer = ({
   open = false,
   handleClose = () => {},
   handleOpen = () => {},
+  handleOpenAuthForm = ()=>{}
 }) => {
   const navigate = useNavigate();
   const [isDisabled, setIsDisabled] = React.useState(false) 
@@ -24,6 +25,7 @@ const AuthDrawer = ({
 const handlereCaptcha=()=>{
   setRefreshReCaptcha(prev=>!prev)
 }
+
 
 const setTokenFunc = (getToken) => {
   setToken(getToken);

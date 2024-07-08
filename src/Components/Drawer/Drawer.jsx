@@ -9,11 +9,13 @@ import ListItemText from "@mui/material/ListItemText";
 import { Drawer as MuiDrawer, Typography } from "@mui/material";
 import { IoCloseOutline } from "react-icons/io5";
 import { CiMenuBurger } from "react-icons/ci";
-import { headerIconsConditionallyRender, tabsArray } from "../../utils/utils";
+import { headerIconsConditionallyRender, mobileRabsArray, tabsArray } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import HeaderIcon from "../HeaderIcon/HeaderIcon";
+import AuthDrawer from "../AuthDrawer/AuthDrawer";
 const Drawer = () => {
+
   const cb=(id)=>{
     if(id==="unauthenticated"){
      return setOpenAuthForm(true)
@@ -40,17 +42,42 @@ const Drawer = () => {
   }
   const auth = useSelector(state=>state.auth)
   const navigate = useNavigate()
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
+const handleOpenAuthForm=(formType)=>{
+  return
 
+}
+
+  const handleAuthForm = (x)=>{
+    console.log(x)
+  }
   const DrawerList = (
     <Box className="manRope400" sx={{ width: 250, mt:"30px" }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
         {tabsArray.map((x, index) => (
-          <ListItem   onClick={()=>{navigate(x.link)}} key={index} disablePadding>
+          <ListItem sx={{
+            display:{
+              md:"unset",
+              xs:"none"
+            }
+          }}  onClick={()=>{navigate(x.link)}} key={index} disablePadding>
+            <ListItemButton>
+              <ListItemIcon></ListItemIcon>
+              <ListItemText primary={x.tabName} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+        {mobileRabsArray.map((x, index) => (
+          <ListItem sx={{
+            display:{
+              md:"none",
+              xs:"unset"
+            }
+          }}  onClick={()=>{["login", "sign up"].includes(x.tabName)?handleAuthForm(x.tabName): navigate(x.link)}} key={index} disablePadding>
             <ListItemButton>
               <ListItemIcon></ListItemIcon>
               <ListItemText primary={x.tabName} />
@@ -78,7 +105,9 @@ const Drawer = () => {
       </Button>
       <MuiDrawer
       className="customDrawer"
-        sx={{ position: "relative"}}
+        sx={{ position: "relative", display:{
+          md:"none", xs:"unset"
+        }}}
         open={open}
         onClose={toggleDrawer(false)}
       >
@@ -97,7 +126,7 @@ const Drawer = () => {
           }} />
         </Box>
         {DrawerList}
-      <Box sx={{
+      {/* <Box sx={{
         position:"absolute",
         bottom:"10px",
         left:"30px"
@@ -106,9 +135,10 @@ const Drawer = () => {
         headerIconsConditionallyRender(auth, false, cb).map((item, index)=><div key={index}>{item.icon}</div>)
       }
        
-      </Box>
+      </Box> */}
 
       </MuiDrawer>
+      <AuthDrawer handleOpenAuthForm={handleOpenAuthForm} open={false} handleClose={()=>setOpen(false)} />
     </div>
   );
 };

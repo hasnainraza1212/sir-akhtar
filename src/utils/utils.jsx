@@ -84,6 +84,18 @@ export const tabsArray = [
   // { tabName: "youtube", link: "/playlists" },
   { tabName: "courses", link: "/courses" }
 ];
+export const mobileRabsArray = [
+  { tabName: "Home", link: "/" },
+  { tabName: "About", link: "/about" },
+  // { tabName: "youtube", link: "/playlists" },
+  { tabName: "courses", link: "/courses" },
+  { tabName: "login", link: null },
+  { tabName: "sign up", link: null },
+  { tabName: "Logout", link: null }
+
+
+
+];
 
 export const headerIcons = [
   {
