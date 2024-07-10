@@ -42,12 +42,13 @@ const Drawer = () => {
   }
   const auth = useSelector(state=>state.auth)
   const navigate = useNavigate()
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
 const handleOpenAuthForm=(formType)=>{
+  console.log(formType)
   return
 
 }
