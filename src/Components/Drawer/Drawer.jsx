@@ -9,53 +9,80 @@ import ListItemText from "@mui/material/ListItemText";
 import { Drawer as MuiDrawer, Typography } from "@mui/material";
 import { IoCloseOutline } from "react-icons/io5";
 import { CiMenuBurger } from "react-icons/ci";
-import { headerIconsConditionallyRender, mobileRabsArray, tabsArray } from "../../utils/utils";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import HeaderIcon from "../HeaderIcon/HeaderIcon";
+import {  mobileRabsArray, tabsArray } from "../../utils/utils";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import AuthDrawer from "../AuthDrawer/AuthDrawer";
+import { handleAuth } from "../../Redux/Slice/UserSlice/UserSlice";
+import { handleSnackAlert } from "../../Redux/Slice/SnackAlertSlice/SnackAlertSlice";
 const Drawer = () => {
-
-  const cb=(id)=>{
-    if(id==="unauthenticated"){
-     return setOpenAuthForm(true)
-    }
-    if(id==="authenticated"){
-      return navigate("/profile")
-    }
-    
-    if(id==="logout"){
-      dispatch(handleSnackAlert({
-        open:true,
-        severity:"success",
-        message:"Logout successfully"
-    }))
-
-      dispatch(handleAuth({
-        username:null, email:null, phoneVerificationStatus:null, emailVerificationStatus:null, _id:null, type:null, accessToken:null, refreshToken:null,authenticated:false}))
-      if(pathname!=="/"){
-        navigate("/")
-
-      }
-    
-    }
-  }
-  const auth = useSelector(state=>state.auth)
+  const [authForm , setAuthForm] = React.useState("")
+  const [openAuthForm, setOpenAuthForm] = React.useState(false)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const {pathname} = useLocation()
   const [open, setOpen] = React.useState(false);
+  // const cb=(id)=>{
+  //   if(id==="unauthenticated"){
+  //    return setOpenAuthForm(true)
+  //   }
+  //   if(id==="authenticated"){
+  //     return navigate("/profile")
+  //   }
+    
+  //   if(id==="logout"){
+  //     dispatch(handleSnackAlert({
+  //       open:true,
+  //       severity:"success",
+  //       message:"Logout successfully"
+  //   }))
+
+  //     dispatch(handleAuth({
+  //       username:null, email:null, phoneVerificationStatus:null, emailVerificationStatus:null, _id:null, type:null, accessToken:null, refreshToken:null,authenticated:false}))
+  //     if(pathname!=="/"){
+  //       navigate("/")
+
+  //     }
+    
+  //   }
+  // }
+  const auth = useSelector(state=>state.auth)
+
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
 const handleOpenAuthForm=(formType)=>{
-  console.log(formType)
+  setOpenAuthForm(true)
+  if(formType==="login"){
+
+    console.log("login")
+    return setAuthForm(formType)
+  }
+  if(formType==="sign up"){
+    console.log("sign up")
+    return setAuthForm(formType)
+  }
+  if (formType ==="logout"){
+    dispatch(handleSnackAlert({
+      open:true,
+      severity:"success",
+      message:"Logout successfully"
+  }))
+
+    dispatch(handleAuth({
+      username:null, email:null, phoneVerificationStatus:null, emailVerificationStatus:null, _id:null, type:null, accessToken:null, refreshToken:null,authenticated:false}))
+  setOpenAuthForm(false)
+
+    if(pathname!=="/"){
+      navigate("/")
+
+    }
+  }
+
   return
 
 }
-
-  const handleAuthForm = (x)=>{
-    console.log(x)
-  }
   const DrawerList = (
     <Box className="manRope400" sx={{ width: 250, mt:"30px" }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
@@ -72,13 +99,18 @@ const handleOpenAuthForm=(formType)=>{
             </ListItemButton>
           </ListItem>
         ))}
-        {mobileRabsArray.map((x, index) => (
+        {mobileRabsArray.filter(item=>{
+          if(auth.authenticated){
+            return item.tabName !=="login" && item.tabName !=="sign up" 
+          }
+          return item.tabName !=="logout"
+        }).map((x, index) => (
           <ListItem sx={{
             display:{
               md:"none",
               xs:"unset"
             }
-          }}  onClick={()=>{["login", "sign up"].includes(x.tabName)?handleAuthForm(x.tabName): navigate(x.link)}} key={index} disablePadding>
+          }}  onClick={()=>{["login", "sign up", "logout"].includes(x.tabName)?handleOpenAuthForm(x.tabName): navigate(x.link)}} key={index} disablePadding>
             <ListItemButton>
               <ListItemIcon></ListItemIcon>
               <ListItemText primary={x.tabName} />
@@ -139,7 +171,7 @@ const handleOpenAuthForm=(formType)=>{
       </Box> */}
 
       </MuiDrawer>
-      <AuthDrawer handleOpenAuthForm={handleOpenAuthForm} open={false} handleClose={()=>setOpen(false)} />
+      <AuthDrawer authForm={authForm} open={openAuthForm} handleClose={()=>setOpenAuthForm(false)} />
     </div>
   );
 };

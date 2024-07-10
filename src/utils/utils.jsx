@@ -91,7 +91,7 @@ export const mobileRabsArray = [
   { tabName: "courses", link: "/courses" },
   { tabName: "login", link: null },
   { tabName: "sign up", link: null },
-  { tabName: "Logout", link: null }
+  { tabName: "logout", link: null }
 
 
 

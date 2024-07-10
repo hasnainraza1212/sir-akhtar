@@ -10,9 +10,8 @@ import Signup from "../SignUp/SignUp";
 import { GoogleReCaptchaProvider, GoogleReCaptcha } from "react-google-recaptcha-v3";
 const AuthDrawer = ({
   open = false,
+  authForm="",
   handleClose = () => {},
-  handleOpen = () => {},
-  handleOpenAuthForm = ()=>{}
 }) => {
   const navigate = useNavigate();
   const [isDisabled, setIsDisabled] = React.useState(false) 
@@ -56,7 +55,17 @@ const setTokenFunc = (getToken) => {
         }
     </Box>
   );
+React.useEffect(()=>{
+  if(authForm){
+    if (authForm==="login"){
+      setToggleAuthForms(false)
+    }
+    if(authForm==="sign up"){
+      setToggleAuthForms(true)
+    }
+  }
 
+},[authForm])
   return (
     <div>
        <GoogleReCaptchaProvider reCaptchaKey={"6Ld21-gpAAAAAILoc4ASgCJnJgKiHSogO20Ge83o"}>
